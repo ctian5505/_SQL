@@ -1,3 +1,4 @@
+# DML
 ----EXERCISE - BASIC SELECT QUERIES
 ----• Retrieve the first 5 products from the Product table
 ----SELECT TOP 5 *
