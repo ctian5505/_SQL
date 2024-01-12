@@ -1,5 +1,5 @@
 # DML
-- Retrieve the first 5 products from the Product table
+-- Retrieve the first 5 products from the Product table
 SELECT 
   TOP 5 *
 FROM 
