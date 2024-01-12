@@ -1,8 +1,9 @@
 # _SQL
-<https://github.com/ctian5505/_SQL/blob/main/AdventureWorks.sql>
+
 This file contains only SQL projects and notes.
 
 # AdventureWorks.sql
+Github Link : <https://github.com/ctian5505/_SQL/blob/main/AdventureWorks.sql>
 1. Retrieve the first 5 products from the Product table.
 2. Get the top 10 employees from the Employee table along with their job titles.
 3. Retrieve all orders placed by customer 'John Smith' (FirstName = 'John' and LastName = 'Smith') from the [dbo]. [FactInternetSales] table.
