@@ -6,7 +6,7 @@ FROM
 
 -- 2.  Get the top 10 employees from the Employee table along with their job titles.
 SELECT 
-    TOP 10 EmployeeKey, 
+	TOP 10 EmployeeKey, 
     FirstName, 
     MiddleName, 
     LastName, 
@@ -32,8 +32,41 @@ IN(
 		FirstName = 'John' AND LastName = 'Smith'
     )
 
+-- 4. Get all products with a weight greater than 10 pounds (Weight > 10) from the [dbo] • [DimProduct] table.
+SELECT
+	ProductKey, 
+	EnglishProductName, 
+	Weight, 
+	WeightUnitMeasureCode
+FROM 
+	DimProduct 
+WHERE 
+	Weight > 10 AND WeightUnitMeasureCode = 'LB'
 
+-- 5. Get the top 5 products with the lowest list prices from the [dbo]-[DimProduct] table.
+SELECT 
+	TOP 5
+	ProductKey,
+	EnglishProductName,
+	ListPrice 
+FROM
+	DimProduct
+WHERE
+	ListPrice IS NOT NULL
+ORDER BY
+	ListPrice ASC
 
+--6. Retrieve the 10 oldest orders from the [dbo]. [FactInternetSales] table, sorted by the order date in ascending order.
+SELECT
+	TOP 10 
+	SalesOrderNumber,
+	ProductKey,
+	OrderDate,
+	SalesAmount
+FROM
+	FactInternetSales
+ORDER BY 
+	OrderDate ASC
 
 
 
