@@ -13,3 +13,53 @@ SELECT
     Title
 FROM 
     DimEmployee
+
+-- 3. Retrieve all orders placed by customer 'John Smith' (FirstName = 'John' and LastName = 'Smith') from the [dbo]. [FactInternetSales] table.
+SELECT
+	SalesOrderNumber,
+	OrderDate,
+	SalesAmount
+FROM
+	FactInternetSales
+WHERE
+	CustomerKey
+IN(
+	SELECT
+		CustomerKey
+	FROM
+		DimCustomer
+	WHERE
+		FirstName = 'John' AND LastName = 'Smith'
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                    
