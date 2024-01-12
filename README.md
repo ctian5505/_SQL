@@ -1,4 +1,5 @@
 # _SQL
+<https://github.com/ctian5505/_SQL/blob/main/AdventureWorks.sql>
 This file contains only SQL projects and notes.
 
 # AdventureWorks.sql
