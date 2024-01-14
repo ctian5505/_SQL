@@ -272,7 +272,7 @@ FROM
 ORDER BY
 	StandardCost DESC
 	
--- x9. Retrieve the product names and category names for products in the "dbo.DimProduct" table along with their corresponding categories from the "dbo.DimProductCategory" table.
+-- 19. Retrieve the product names and category names for products in the "dbo.DimProduct" table along with their corresponding categories from the "dbo.DimProductCategory" table.
 SELECT 
 	EnglishProductName, EnglishProductCategoryName
 FROM
