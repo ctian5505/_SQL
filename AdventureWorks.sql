@@ -13,6 +13,15 @@
 -- 13. Calculate the total sales amount for each product category from the dbo. DimProduct and dbo. FactInternetSales tables. Display the results with the category name, subcategory name and the total sales amount order by cat
 -- 14. Retrieve the top 5 customers with the highest total purchases from the [dbo]. [DimCustomer] and [dbo] • [FactInternetSales] tables. Display customer details along with their total
 -- 15. Find the average quantity and total sales amount of products sold in each month of the year 2011 from the [dbo]. [DimProduct] and [dbo]. FactResellerSales tables.
+-- 16. Retrieve the first and last names of all employees in the "dbo.DimEmployee" table.
+-- 17. Retrieve the product names and list prices for products in the "dbo.DimProduct" table where the list price is greater than $1,000.
+-- 18. Retrieve the product names and standard costs for products in the "dbo.DimProduct" table, ordered by standard cost in descending order.
+-- 19. Retrieve the product names and category names for products in the "dbo.DimProduct" table along with their corresponding categories from the "dbo.DimProductCategory" table.
+-- 20. Calculate the total sales amount for each product in the "dbo.FactInternetSales" table and display the product names along with their total sales amounts.
+-- 21. Find the number of employees in each department in the "dbo.Employee" table and display the department names along with the employee counts.
+-- 22. Create a CTE that calculates the average list price for products in the "dbo.DimProduct" table and then retrieve the product names along with their list prices, indicating whether each product's list price is above or below the average.
+-- 23. Calculate the cumulative sales amount for each day in the "dbo.FactInternetSales" table, ordered by date, and display the date along with the cumulative sales amount.
+-- 24. Retrieve the product names and standard costs for products in the "dbo.DimProduct" table where the standard cost is less than the average standard cost for all products, and the product name starts with the letter 'H'.
 
 
 -- 1. Retrieve the first 5 products from the Product table
