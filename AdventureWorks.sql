@@ -248,11 +248,106 @@ GROUP BY
 ORDER BY
 	MONTH(OrderDate)
 
+-- 16. Retrieve the first and last names of all employees in the "dbo.DimEmployee" table.
+SELECT
+	FirstName, LastName
+FROM
+	DimEmployee
 
+-- 17. Retrieve the product names and list prices for products in the "dbo.DimProduct" table where the list price is greater than $1,000.
+SELECT
+	EnglishProductName, ListPrice
+FROM
+	DimProduct
+WHERE
+	ListPrice > 1000
+ORDER BY
+	ListPrice
+	
+-- 18. Retrieve the product names and standard costs for products in the "dbo.DimProduct" table, ordered by standard cost in descending order.
+SELECT
+	EnglishProductName,  StandardCost
+FROM
+	DimProduct
+ORDER BY
+	StandardCost DESC
+	
+-- x9. Retrieve the product names and category names for products in the "dbo.DimProduct" table along with their corresponding categories from the "dbo.DimProductCategory" table.
+SELECT 
+	EnglishProductName, EnglishProductCategoryName
+FROM
+	DimProduct as dp
+LEFT JOIN
+	DimProductSubcategory as dsp
+ON
+	dp.ProductSubcategoryKey = dsp.ProductSubcategoryKey
+LEFT JOIN
+	DimProductCategory dpc
+ON
+	dsp.ProductCategoryKey = dpc.ProductCategoryKey
+WHERE
+	EnglishProductCategoryName IS NOT NULL
+	
+-- 20. Calculate the total sales amount for each product in the "dbo.FactInternetSales" table and display the product names along with their total sales amounts.
+SELECT
+	dp.EnglishProductName,SUM(fis.SalesAmount) AS [Total Sales]
+FROM
+	FactInternetSales AS fis
+LEFT JOIN
+	DimProduct AS dp
+ON
+	fis.ProductKey = dp.ProductKey
+GROUP BY
+	dp.EnglishProductName
 
+-- 21. Find the number of employees in each department in the "dbo.Employee" table and display the department names along with the employee counts.
+SELECT 
+	DepartmentName, COUNT(*)
+FROM
+	DimEmployee
+GROUP BY
+	DepartmentName
 
+-- 22. Create a CTE that calculates the average list price for products in the "dbo.DimProduct" table and then retrieve the product names along with their list prices, indicating whether each product's list price is above or below the average.
+WITH 
+	CTE_product
+AS (
+	SELECT
+		EnglishProductName, AVG(ListPrice) AS [Average_Price]
+	FROM
+		DimProduct
+	GROUP BY
+		EnglishProductName
+	HAVING  AVG(ListPrice) IS NOT NULL
+	)
+SELECT
+	EnglishProductName, 
+	Average_Price,
+	CASE
+		WHEN Average_Price >  724.2266 THEN 'Above Average'
+		ELSE 'Below Average'
+	END
+FROM
+	CTE_Product
+GROUP BY
+	EnglishProductName, Average_Price
 
+-- 23. Calculate the cumulative sales amount for each day in the "dbo.FactInternetSales" table, ordered by date, and display the date along with the cumulative sales amount.
 
+SELECT
+	OrderDate,
+	SUM(SalesAmount) OVER (ORDER BY OrderDate) AS CummulativeSales
+FROM
+	FactInternetSales
+
+-- 24. Retrieve the product names and standard costs for products in the "dbo.DimProduct" table where the standard cost is less than the average standard cost for all products, and the product name starts with the letter 'H'.
+SELECT
+	EnglishProductName,
+	StandardCost
+FROM
+	DimProduct
+WHERE
+	StandardCost < (SELECT AVG(StandardCost) FROM DimProduct) AND EnglishProductName LIKE 'H%'
 
 
 
