@@ -253,56 +253,52 @@ SELECT
 FROM
 	CTEHourlySales
 
---- Who has the highest purchase base on order_id
---SELECT
---	od.order_id,
---	SUM(price) SalesByOrderID,
---	RANK() OVER (ORDER BY SUM(price) DESC ) AS Rank
---FROM
---	order_details AS od
---LEFT JOIN
---	menu_items AS mi
---ON
---	od.item_id = mi.menu_item_id
---GROUP BY
---	od.order_id
+-- Who has the highest purchase base on order_id
+SELECT
+	od.order_id,
+	SUM(price) SalesByOrderID,
+	RANK() OVER (ORDER BY SUM(price) DESC ) AS Rank
+FROM
+	order_details AS od
+LEFT JOIN
+	menu_items AS mi
+ON
+	od.item_id = mi.menu_item_id
+GROUP BY
+	od.order_id
 
-
-
-
-------- Previous Days in Month january
---WITH
---	CTEJanuarySales
---AS(
---	SELECT
---		DATEPART(DAY, order_date) AS January,
---		SUM(price) AS DailySales
---	FROM
---		order_details AS od
---	LEFT JOIN
---		menu_items AS mi
---	ON
---		od.item_id = mi.menu_item_id
---	WHERE
---		DATEPART(Month, order_date) = 1
---	GROUP BY
---		DATEPART(DAY, order_date)
---	)
---SELECT
---	*,
---	ISNULL(LAG(DailySales) OVER (ORDER BY January), 0 ) AS PreviousDaySale,
---	DailySales - ISNULL(LAG(DailySales) OVER (ORDER BY January), DailySales ) AS DayChange
---FROM
---	CTEJanuarySsales
+-- Previous Days in Month january
+WITH
+	CTEJanuarySales
+AS(
+	SELECT
+		DATEPART(DAY, order_date) AS January,
+		SUM(price) AS DailySales
+	FROM
+		order_details AS od
+	LEFT JOIN
+		menu_items AS mi
+	ON
+		od.item_id = mi.menu_item_id
+	WHERE
+		DATEPART(Month, order_date) = 1
+	GROUP BY
+		DATEPART(DAY, order_date)
+	)
+SELECT
+	*,
+	ISNULL(LAG(DailySales) OVER (ORDER BY January), 0 ) AS PreviousDaySale,
+	DailySales - ISNULL(LAG(DailySales) OVER (ORDER BY January), DailySales ) AS DayChange
+FROM
+	CTEJanuarySsales
 
 -- Display the item name together its cataegory and count parttion by the category
-
---SELECT
---	item_name, 
---	category,
---	COUNT(category) OVER (PARTITION BY category) AS CategoryCount
---FROM
---	menu_items
+SELECT
+	item_name, 
+	category,
+	COUNT(category) OVER (PARTITION BY category) AS CategoryCount
+FROM
+	menu_items
 
 --SELECT
 --	DISTINCT(mi.menu_item_id), 
