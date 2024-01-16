@@ -5,59 +5,58 @@
 --- Import the data : - Data Link -https://mavenanalytics.io/data-playground?page=2&pageSize=5
 -----------------------------------------------
 
---- Data type formating
+-- Data type formating
 	-- menu_items
-	--ALTER TABLE menu_items
-	--ALTER COLUMN menu_item_id int not null
+ALTER TABLE menu_items
+ALTER COLUMN menu_item_id int not null
 
-	--ALTER TABLE menu_items
-	--ALTER COLUMN item_name nvarchar(75)not null
+ALTER TABLE menu_items
+ALTER COLUMN item_name nvarchar(75)not null
 
-	--ALTER TABLE menu_items
-	--ALTER COLUMN category nvarchar(75) not null
+ALTER TABLE menu_items
+ALTER COLUMN category nvarchar(75) not null
 
-	--ALTER TABLE menu_items 
-	--ALTER COLUMN price money not null
+ALTER TABLE menu_items 
+ALTER COLUMN price money not null
 
 	-- order_details
+ALTER TABLE order_details
+ALTER COLUMN order_details_id int not null
 
---ALTER TABLE order_details
---ALTER COLUMN order_details_id int not null
+ALTER TABLE order_details
+ALTER COLUMN order_id int not null
 
---ALTER TABLE order_details
---ALTER COLUMN order_id int not null
+ALTER TABLE order_details
+ALTER COLUMN order_date date not null
 
---ALTER TABLE order_details
---ALTER COLUMN order_date date not null
+ALTER TABLE order_details
+ALTER COLUMN order_time time(0) not null
 
---ALTER TABLE order_details
---ALTER COLUMN order_time time(0) not null
+ALTER TABLE order_details
+ALTER COLUMN item_id int not null
+	
+-- Removing order with Item id with 'null' value, because it will not connect to the fact table
+DELETE FROM order_details
+WHERE item_id = 'null'
 
---ALTER TABLE order_details
---ALTER COLUMN item_id int not null
------------------------------------------------
---- Removing order with Item id with 'null' value : because it will not connect to the fact table
-
---DELETE FROM order_details
---WHERE item_id = 'null'
------------------------------------------------
---- adding constraints
--- PK
---ALTER TABLE menu_items
---ADD CONSTRAINT PK_MenuItems 
---Primary KEY (menu_item_id)
--- FK
---ALTER TABLE order_details
---ADD CONSTRAINT FK_ItemID
---FOREIGN KEY (item_id)
---REFERENCES menu_items(menu_item_id)
--------------------- Queries Random
-
--- Count the total transaction
---SELECT
---	COUNT(*) AS TransactionCount
---FROM
---	order_details
+--- Adding constraints
+-- Priamry Key
+ALTER TABLE menu_items
+ADD CONSTRAINT PK_MenuItems 
+Primary KEY (menu_item_id)
+	
+-- Foreign Key
+ALTER TABLE order_details
+ADD CONSTRAINT FK_ItemID
+FOREIGN KEY (item_id)
+REFERENCES menu_items(menu_item_id)
+	
+-- Queries Random
+-- 1. Count the total transaction
+SELECT
+	COUNT(*) AS TransactionCount
+FROM
+	order_details
 
 
 
