@@ -4,7 +4,8 @@
 -- DDL(Data Definition Language)
 	-- Adding Constraint
 -- DQL(Data Query Language)
-	
+
+-- PowerBI DAX
 
 ---------------------------------------------------------------------------
 -- File Link: https://www.kaggle.com/datasets/rhuebner/human-resources-data-set       
@@ -534,132 +535,56 @@
 	GROUP BY
 		EmploymentStatus
 
------------ To Transfer to PowerBi Site
+----------- PowerBI
 --- Get The data from SQL Server
 --- Transform the Data / Data is cleaned because the source is clean
 
--- Creatind Calendar TRable
-Calendar = 
-    CALENDAR(
-        MIN(DimEmployee[DateofHire]),
-        MAX(DimEmployee[DateofHire])
-    )
-// Creating Calendar based on Date  of Hire
+-- Creating Relationship
 
--- Year
-Year = 
-    YEAR(
-        'Calendar'[Date]
-    )
-// Creating Year Column
---Quarter
-Quarter = 
-    QUARTER(
-        'Calendar'[Date]
-    )
-// Creating Quarter Column
---Month
-Month = 
-    FORMAT(
-        'Calendar'[Date],
-        "mmm"
-    )
-// Creating Month Column
---Day
-Day = 
-    DAY(
-        'Calendar'[Date]
-    )
-// Creating Day Column
--- Month Number
-MonthNo = 
-    MONTH(
-        'Calendar'[Date]
-    )
-// Creating Month Number Column because this will be use to sort the month name column
+-- Adding Calendar Table
+-- Creating Calendar Table > Add Table Calendar
+	-- Add Calendar Column
+		Calendar = 
+		    CALENDAR(
+		        MIN(DimEmployee[DateofHire]),
+		        MAX(DimEmployee[DateofHire])
+		    )
+		// Creating Calendar based on Date  of Hire
+	-- Add Year Column
+		Year = 
+		    YEAR(
+		        'Calendar'[Date]
+		    )
+		// Creating Year Column
+	-- Add Quarter Column
+		Quarter = 
+		    QUARTER(
+		        'Calendar'[Date]
+		    )
+		// Creating Quarter Column
+	-- Add Month Column
+		Month = 
+		    FORMAT(
+		        'Calendar'[Date],
+		        "mmm"
+		    )
+		// Creating Month Column
+	-- Add Day Column
+		Day = 
+		    DAY(
+		        'Calendar'[Date]
+		    )
+		// Creating Day Column
+	-- Add Month Number Column
+		MonthNo = 
+		    MONTH(
+		        'Calendar'[Date]
+		    )
+		// Creating a Month Number Column because this will be used to sort the month name column
 
-
---- Measures
--- Age
-Age = 
-    YEAR(TODAY()) - 
-    YEAR(MAX(DimEmployee[DateOFBirth]))
-//Calculate tth age of the employee
----- Creating Relationship
-
-
-
-
-----------
-Random Query
-
-CREATE PROCEDURE EmployeeInformation @EmployeeID INT
-AS
-BEGIN
-	SELECT
-		fhr.EmpID,
-		de.EmployeeName,
-		dg.Sex,
-		de.DateOFBirth,
-		YEAR(GETDATE()) - YEAR(de.DateOFBirth) AS Age,
-		dms.MaritalDesc,
-		de.State,
-		de.Zip,
-		de.RaceDesc,
-		de.CitizenDesc,
-		dd.Department,
-		dp.Position,
-		dm.ManagerName,
-		de.DateofHire,
-		de.Salary,
-		de.LastPerformanceReview_Date,
-		de.RecruitmentSource,
-		des.EmploymentStatus,
-		de.TermReason,
-		de.DateofTermination,
-		de.Absences,
-		de.DaysLateLast30,
-		de.SpecialProjectsCount
-	FROM
-		FactHRRecord AS fhr
-	LEFT JOIN
-		DimEmployee AS de
-	ON
-		fhr.EmpID = de.EmpID
-	LEFT JOIN
-		DimDepartment as dd
-	ON
-		fhr.DeptID = dd.DeptID
-	LEFT JOIN
-		DimEmploymentStatus AS des
-	ON
-		fhr.EmpStatusID = des.EmpStatusID
-	LEFT JOIN
-		DimEmpSatisfaction AS desat
-	ON
-		fhr.EmpSatisfactionID = desat.EmpSatisfactionID
-	LEFT JOIN
-		DimGender AS dg
-	ON
-		fhr.GenderID =dg.GenderID
-	LEFT JOIN
-		DimManager AS dm
-	ON
-		fhr.ManagerID = dm.ManagerID
-	LEFT JOIN
-		DimMaritalStatus AS dms
-	ON
-		fhr.MaritalStatusID = dms.MaritalStatusID
-	LEFT JOIN
-		DimPerformanceScore AS dpf
-	ON 
-		fhr.PerfScoreID  = dpf.PerfScoreID
-	LEFT JOIN
-		DimPosition as dp
-	ON
-		fhr.PositionID = dp.PositionID
-	WHERE fhr.EmpID = @EmployeeID
-	END
-
-
-EXEC EmployeeInformation 10001
+-- PowerBI DAX
+	-- Create a DAX that calculates the age of the employee.
+		Age = 
+		    YEAR(TODAY()) - 
+		    YEAR(MAX(DimEmployee[DateOFBirth]))
+		//Calculate tth age of the employee
