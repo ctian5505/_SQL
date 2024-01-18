@@ -1,16 +1,17 @@
---- HR Project
+--- HR Project Goal
   -- Data normalization
   -- Data Cleaning
   -- Adding Constraint
 
 -- Querying
+	-- Procedure 
 
 --------------------------------------------------------------
 -- Create Database
 -- Import the file | File Link:
         -- Raw data is nasa isang table lang which is not a good practice, so that I need to normalize it, and put it to their desinated tables
 
----------------------* Data Cleaning & Normalization
+-------------------------------------------------- Data Cleaning & Normalization
         --  Gender | Normalization |
         --Transfering the data into DimGender Table
 SELECT
@@ -192,7 +193,7 @@ UPDATE DimEmpSatisfaction
 SET EmpSatisfaction = 'Very Satisfied'
 WHERE EmpSatisfactionID = 5
 
--- DimEmployee | Normalization |
+-- Employee | Normalization |
 	-- Transfering the choosen column to its designated table which is DimEmployee
 SELECT 
 	 EmpID,
@@ -215,3 +216,244 @@ INTO
 	DimEmployee
 FROM 
 	HRDataset_v14
+
+--HRRecord | Normalization |
+	-- Transfering the data into FactHRRecord Table
+SELECT
+	EmpID,
+	MarriedID,
+	MaritalStatusID,
+	GenderID,
+	EmpStatusID,
+	DeptID,
+	PerfScoreID,
+	PositionID,
+	ManagerID,
+	EmpSatisfaction AS EmpSatisfactionID
+INTO
+	FactHRRecord
+FROM 
+	HRDataset_v14
+
+
+----------------------------- Changing Data types based on the data inputs
+--DimDepartment
+ALTER TABLE DimDepartment
+ALTER COLUMN DeptID INT NOT NULL
+
+ALTER TABLE DimDepartment
+ALTER COLUMN Department NVARCHAR(40) NOT NULL
+
+-- DimEmployee
+ALTER TABLE DimEmployee
+ALTER COLUMN EmpID INT NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN EmployeeName NVARCHAR(250) NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN Salary MONEY NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN State NVARCHAR(5) NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN Zip INT NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN DateOfBirth DATE NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN CitizenDesc NVARCHAR(50) NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN RaceDesc NVARCHAR(50) NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN DateOFHire DATE NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN DateOFTermination DATE
+
+ALTER TABLE DimEmployee
+ALTER COLUMN TermReason NVARCHAR(250) NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN RecruitmentSource NVARCHAR(50) NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN SpecialProjectsCount INT NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN LastPerformanceReview_Date DATE NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN DaysLAteLast30 INT NOT NULL
+
+ALTER TABLE DimEmployee
+ALTER COLUMN Absences INT NOT NULL
+
+-- DimEmploymentStatus
+ALTER TABLE DimEmploymentStatus
+ALTER COLUMN EmpStatusID INT NOT NULL
+
+ALTER TABLE DimEmploymentStatus
+ALTER COLUMN EmploymentStatus NVARCHAR(50) NOT NULL
+
+-- DimEmpSatisfaction
+ALTER TABLE DimEmpSatisfaction
+ALTER COLUMN EmpSatisfactionID INT NOT NULL
+
+ALTER TABLE DimEmpSatisfaction
+ALTER COLUMN EmpSatisfaction NVARCHAR(50) NOT NULL
+
+-- DimGender
+ALTER TABLE DimGender
+ALTER COLUMN GenderID INT NOT NULL
+
+ALTER TABLE DimGender
+ALTER COLUMN Sex NVARCHAR(1) NOT NULL
+
+-- DimManager
+ALTER TABLE DimManager
+ALTER COLUMN ManagerID INT NOT NULL
+
+ALTER TABLE DimManager
+ALTER COLUMN ManagerName NVARCHAR(100) NOT NULL
+
+--DimMaritalStatus
+ALTER TABLE DimMaritalStatus
+ALTER COLUMN MaritalStatusID INT NOT NULL
+
+ALTER TABLE DimMaritalStatus
+ALTER COLUMN MaritalDesc NVARCHAR(20) NOT NULL
+
+--DimPerformanceScore
+ALTER TABLE DimPerformanceScore
+ALTER COLUMN PerfScoreID INT NOT NULL
+
+ALTER TABLE DimPerformanceScore
+ALTER COLUMN PerformanceScore NVARCHAR(20) NOT NULL
+
+-- DimPosition
+ALTER TABLE DimPosition
+ALTER COLUMN PositionID INT NOT NULL
+
+ALTER TABLE DimPosition
+ALTER COLUMN Position NVARCHAR(100) NOT NULL
+
+
+-- FactHRRecor
+ALTER TABLE FactHRRecord
+ALTER COLUMN EmpID INT NOT NULL
+
+ALTER TABLE FactHRRecord
+ALTER COLUMN MarriedID INT NOT NULL
+
+ALTER TABLE FactHRRecord
+ALTER COLUMN MaritalStatusID INT NOT NULL
+
+ALTER TABLE FactHRRecord
+ALTER COLUMN GenderID INT NOT NULL
+
+ALTER TABLE FactHRRecord
+ALTER COLUMN EmpStatusID INT NOT NULL
+
+ALTER TABLE FactHRRecord
+ALTER COLUMN DeptID INT NOT NULL
+
+ALTER TABLE FactHRRecord
+ALTER COLUMN PerfScoreID INT NOT NULL
+
+ALTER TABLE FactHRRecord
+ALTER COLUMN PositionID INT NOT NULL
+
+ALTER TABLE FactHRRecord
+ALTER COLUMN ManagerID INT NOT NULL
+
+ALTER TABLE FactHRRecord
+ALTER COLUMN EmpSatisfactionID INT  NOT NULL
+
+-------------------------------------- Adding  Primary Constraints
+ALTER TABLE DimGender
+ADD CONSTRAINT PK_Gender
+PRIMARY KEY (GenderID)
+
+ALTER TABLE DimEmploymentStatus
+ADD CONSTRAINT PK_EmploymentStatus
+PRIMARY KEY(EmpStatusID)
+
+ALTER TABLE DimDepartment
+ADD CONSTRAINT PK_Department
+PRIMARY KEY(DeptID)
+
+ALTER TABLE DimPerformanceScore
+ADD CONSTRAINT PK_PerformanceScore
+PRIMARY KEY(PerfScoreID)
+
+ALTER TABLE DimPosition
+ADD CONSTRAINT PK_Position
+PRIMARY KEY(PositionID)
+
+ALTER TABLE DimEmployee
+ADD CONSTRAINT PK_Employee
+PRIMARY KEY(EmpID)
+
+ALTER TABLE DimMaritalStatus
+ADD CONSTRAINT PK_MaritalStatus
+PRIMARY KEY(MaritalStatusID)
+
+ALTER TABLE DimManager
+ADD CONSTRAINT PK_Manager
+PRIMARY KEY(ManagerID)
+
+ALTER TABLE DimEmpSatisfaction
+ADD CONSTRAINT PK_EmpSatisfaction
+PRIMARY KEY(EmpSatisfactionID)
+
+-------------------- Adding Foreign Key Constraint
+
+ALTER TABLE FactHRRecord
+ADD CONSTRAINT FK_Gender
+FOREIGN KEY(GenderID)
+REFERENCES DimGender(GenderID)
+
+ALTER TABLE FactHRRecord
+ADD CONSTRAINT FK_EmploymentStatus
+FOREIGN KEY(EmpStatusID)
+REFERENCES DimEmploymentStatus(EmpStatusID)
+
+ALTER TABLE FactHRRecord
+ADD CONSTRAINT FK_Department
+FOREIGN KEY(DeptID)
+REFERENCES DimDepartment(DeptID)
+
+ALTER TABLE FactHRRecord
+ADD CONSTRAINT FK_PerformanceScore
+FOREIGN KEY (PerfScoreID)
+REFERENCES DimPerformanceScore(PerfScoreID)
+
+ALTER TABLE FactHRRecord
+ADD CONSTRAINT FK_Employee
+FOREIGN KEY (EmpID)
+REFERENCES DimEmployee(EmpID)
+
+ALTER TABLE FactHRRecord
+ADD CONSTRAINT FK_MaritalStatus
+FOREIGN KEY (MaritalStatusID)
+REFERENCES DimMaritalStatus(MaritalStatusID)
+
+ALTER TABLE FactHRRecord
+ADD CONSTRAINT FK_Manager
+FOREIGN KEY (ManagerID)
+REFERENCES DimManager(ManagerID)
+
+ALTER TABLE FactHRRecord
+ADD CONSTRAINT FK_EmpSatisfaction
+FOREIGN KEY	(EmpSatisfactionID)
+REFERENCES DimEmpSatisfaction(EmpSatisfactionID)
+
+ALTER TABLE FactHRRecord
+ADD CONSTRAINT FK_Position
+FOREIGN KEY (PositionID)
+REFERENCES DimPosition(PositionID)
