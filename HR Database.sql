@@ -10,7 +10,9 @@
 -- File Link: https://www.kaggle.com/datasets/rhuebner/human-resources-data-set       
 -- The file only contains one table containing all the information, which is not a good practice to put all the information in one table.
 -- Task to do: Normalize the data into its designated table.
-        
+
+-- DML(Data Manipulation Language)
+
 	-- Gender | Normalization |
         -- Transfering the data into DimGender Table
 		SELECT
@@ -227,144 +229,134 @@
 		FROM 
 			HRDataset_v14
 
-
------------------------------ Changing Data types based on the data inputs
---DimDepartment
-ALTER TABLE DimDepartment
-ALTER COLUMN DeptID INT NOT NULL
-
-ALTER TABLE DimDepartment
-ALTER COLUMN Department NVARCHAR(40) NOT NULL
-
--- DimEmployee
-ALTER TABLE DimEmployee
-ALTER COLUMN EmpID INT NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN EmployeeName NVARCHAR(250) NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN Salary MONEY NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN State NVARCHAR(5) NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN Zip INT NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN DateOfBirth DATE NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN CitizenDesc NVARCHAR(50) NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN RaceDesc NVARCHAR(50) NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN DateOFHire DATE NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN DateOFTermination DATE
-
-ALTER TABLE DimEmployee
-ALTER COLUMN TermReason NVARCHAR(250) NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN RecruitmentSource NVARCHAR(50) NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN SpecialProjectsCount INT NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN LastPerformanceReview_Date DATE NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN DaysLAteLast30 INT NOT NULL
-
-ALTER TABLE DimEmployee
-ALTER COLUMN Absences INT NOT NULL
-
--- DimEmploymentStatus
-ALTER TABLE DimEmploymentStatus
-ALTER COLUMN EmpStatusID INT NOT NULL
-
-ALTER TABLE DimEmploymentStatus
-ALTER COLUMN EmploymentStatus NVARCHAR(50) NOT NULL
-
--- DimEmpSatisfaction
-ALTER TABLE DimEmpSatisfaction
-ALTER COLUMN EmpSatisfactionID INT NOT NULL
-
-ALTER TABLE DimEmpSatisfaction
-ALTER COLUMN EmpSatisfaction NVARCHAR(50) NOT NULL
-
--- DimGender
-ALTER TABLE DimGender
-ALTER COLUMN GenderID INT NOT NULL
-
-ALTER TABLE DimGender
-ALTER COLUMN Sex NVARCHAR(1) NOT NULL
-
--- DimManager
-ALTER TABLE DimManager
-ALTER COLUMN ManagerID INT NOT NULL
-
-ALTER TABLE DimManager
-ALTER COLUMN ManagerName NVARCHAR(100) NOT NULL
-
---DimMaritalStatus
-ALTER TABLE DimMaritalStatus
-ALTER COLUMN MaritalStatusID INT NOT NULL
-
-ALTER TABLE DimMaritalStatus
-ALTER COLUMN MaritalDesc NVARCHAR(20) NOT NULL
-
---DimPerformanceScore
-ALTER TABLE DimPerformanceScore
-ALTER COLUMN PerfScoreID INT NOT NULL
-
-ALTER TABLE DimPerformanceScore
-ALTER COLUMN PerformanceScore NVARCHAR(20) NOT NULL
-
--- DimPosition
-ALTER TABLE DimPosition
-ALTER COLUMN PositionID INT NOT NULL
-
-ALTER TABLE DimPosition
-ALTER COLUMN Position NVARCHAR(100) NOT NULL
-
-
--- FactHRRecor
-ALTER TABLE FactHRRecord
-ALTER COLUMN EmpID INT NOT NULL
-
-ALTER TABLE FactHRRecord
-ALTER COLUMN MarriedID INT NOT NULL
-
-ALTER TABLE FactHRRecord
-ALTER COLUMN MaritalStatusID INT NOT NULL
-
-ALTER TABLE FactHRRecord
-ALTER COLUMN GenderID INT NOT NULL
-
-ALTER TABLE FactHRRecord
-ALTER COLUMN EmpStatusID INT NOT NULL
-
-ALTER TABLE FactHRRecord
-ALTER COLUMN DeptID INT NOT NULL
-
-ALTER TABLE FactHRRecord
-ALTER COLUMN PerfScoreID INT NOT NULL
-
-ALTER TABLE FactHRRecord
-ALTER COLUMN PositionID INT NOT NULL
-
-ALTER TABLE FactHRRecord
-ALTER COLUMN ManagerID INT NOT NULL
-
-ALTER TABLE FactHRRecord
-ALTER COLUMN EmpSatisfactionID INT  NOT NULL
+-- DDL(Data Definition Language)
+-- Changing Data
+	--DimDepartment
+		ALTER TABLE DimDepartment
+		ALTER COLUMN DeptID INT NOT NULL
+		
+		ALTER TABLE DimDepartment
+		ALTER COLUMN Department NVARCHAR(40) NOT NULL
+	-- DimEmployee
+		ALTER TABLE DimEmployee
+		ALTER COLUMN EmpID INT NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN EmployeeName NVARCHAR(250) NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN Salary MONEY NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN State NVARCHAR(5) NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN Zip INT NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN DateOfBirth DATE NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN CitizenDesc NVARCHAR(50) NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN RaceDesc NVARCHAR(50) NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN DateOFHire DATE NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN DateOFTermination DATE
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN TermReason NVARCHAR(250) NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN RecruitmentSource NVARCHAR(50) NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN SpecialProjectsCount INT NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN LastPerformanceReview_Date DATE NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN DaysLAteLast30 INT NOT NULL
+		
+		ALTER TABLE DimEmployee
+		ALTER COLUMN Absences INT NOT NULL
+	-- DimEmploymentStatus
+		ALTER TABLE DimEmploymentStatus
+		ALTER COLUMN EmpStatusID INT NOT NULL
+		
+		ALTER TABLE DimEmploymentStatus
+		ALTER COLUMN EmploymentStatus NVARCHAR(50) NOT NULL
+	-- DimEmpSatisfaction
+		ALTER TABLE DimEmpSatisfaction
+		ALTER COLUMN EmpSatisfactionID INT NOT NULL
+		
+		ALTER TABLE DimEmpSatisfaction
+		ALTER COLUMN EmpSatisfaction NVARCHAR(50) NOT NULL
+	-- DimGender
+		ALTER TABLE DimGender
+		ALTER COLUMN GenderID INT NOT NULL
+		
+		ALTER TABLE DimGender
+		ALTER COLUMN Sex NVARCHAR(1) NOT NULL
+	-- DimManager
+		ALTER TABLE DimManager
+		ALTER COLUMN ManagerID INT NOT NULL
+		
+		ALTER TABLE DimManager
+		ALTER COLUMN ManagerName NVARCHAR(100) NOT NULL	
+	--DimMaritalStatus
+		ALTER TABLE DimMaritalStatus
+		ALTER COLUMN MaritalStatusID INT NOT NULL
+		
+		ALTER TABLE DimMaritalStatus
+		ALTER COLUMN MaritalDesc NVARCHAR(20) NOT NULL
+	--DimPerformanceScore
+		ALTER TABLE DimPerformanceScore
+		ALTER COLUMN PerfScoreID INT NOT NULL
+		
+		ALTER TABLE DimPerformanceScore
+		ALTER COLUMN PerformanceScore NVARCHAR(20) NOT NULL
+	-- DimPosition
+		ALTER TABLE DimPosition
+		ALTER COLUMN PositionID INT NOT NULL
+		
+		ALTER TABLE DimPosition
+		ALTER COLUMN Position NVARCHAR(100) NOT NULL
+	-- FactHRRecor
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN EmpID INT NOT NULL
+		
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN MarriedID INT NOT NULL
+		
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN MaritalStatusID INT NOT NULL
+		
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN GenderID INT NOT NULL
+		
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN EmpStatusID INT NOT NULL
+		
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN DeptID INT NOT NULL
+		
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN PerfScoreID INT NOT NULL
+		
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN PositionID INT NOT NULL
+		
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN ManagerID INT NOT NULL
+		
+		ALTER TABLE FactHRRecord
+		ALTER COLUMN EmpSatisfactionID INT  NOT NULL
 
 -------------------------------------- Adding  Primary Constraints
 ALTER TABLE DimGender
