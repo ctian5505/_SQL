@@ -588,3 +588,16 @@
 		    YEAR(TODAY()) - 
 		    YEAR(MAX(DimEmployee[DateOFBirth]))
 		//Calculate tth age of the employee
+--------------------------------------------------------
+-- To Arrange
+
+-- Calculate the total number of latest hires.
+SELECT
+	COUNT(EmpID) AS [Latest Hired],
+	MAX(YEAR(DateofHire)) [Latest Year]
+FROM
+	DimEmployee
+WHERE YEAR(DateofHire) = (
+
+SELECT MAX(YEAR(DateofHire)) FROM DimEmployee
+)
