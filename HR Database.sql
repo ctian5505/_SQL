@@ -358,91 +358,181 @@
 		ALTER TABLE FactHRRecord
 		ALTER COLUMN EmpSatisfactionID INT  NOT NULL
 
--------------------------------------- Adding  Primary Constraints
-ALTER TABLE DimGender
-ADD CONSTRAINT PK_Gender
-PRIMARY KEY (GenderID)
+	-- Adding  Primary Key Constraints
+		ALTER TABLE DimGender
+		ADD CONSTRAINT PK_Gender
+		PRIMARY KEY (GenderID)
+		
+		ALTER TABLE DimEmploymentStatus
+		ADD CONSTRAINT PK_EmploymentStatus
+		PRIMARY KEY(EmpStatusID)
+		
+		ALTER TABLE DimDepartment
+		ADD CONSTRAINT PK_Department
+		PRIMARY KEY(DeptID)
+		
+		ALTER TABLE DimPerformanceScore
+		ADD CONSTRAINT PK_PerformanceScore
+		PRIMARY KEY(PerfScoreID)
+		
+		ALTER TABLE DimPosition
+		ADD CONSTRAINT PK_Position
+		PRIMARY KEY(PositionID)
+		
+		ALTER TABLE DimEmployee
+		ADD CONSTRAINT PK_Employee
+		PRIMARY KEY(EmpID)
+		
+		ALTER TABLE DimMaritalStatus
+		ADD CONSTRAINT PK_MaritalStatus
+		PRIMARY KEY(MaritalStatusID)
+		
+		ALTER TABLE DimManager
+		ADD CONSTRAINT PK_Manager
+		PRIMARY KEY(ManagerID)
+		
+		ALTER TABLE DimEmpSatisfaction
+		ADD CONSTRAINT PK_EmpSatisfaction
+		PRIMARY KEY(EmpSatisfactionID)
+	
+	-- Adding Foreign Key Constraint
+		ALTER TABLE FactHRRecord
+		ADD CONSTRAINT FK_Gender
+		FOREIGN KEY(GenderID)
+		REFERENCES DimGender(GenderID)
+		
+		ALTER TABLE FactHRRecord
+		ADD CONSTRAINT FK_EmploymentStatus
+		FOREIGN KEY(EmpStatusID)
+		REFERENCES DimEmploymentStatus(EmpStatusID)
+		
+		ALTER TABLE FactHRRecord
+		ADD CONSTRAINT FK_Department
+		FOREIGN KEY(DeptID)
+		REFERENCES DimDepartment(DeptID)
+		
+		ALTER TABLE FactHRRecord
+		ADD CONSTRAINT FK_PerformanceScore
+		FOREIGN KEY (PerfScoreID)
+		REFERENCES DimPerformanceScore(PerfScoreID)
+		
+		ALTER TABLE FactHRRecord
+		ADD CONSTRAINT FK_Employee
+		FOREIGN KEY (EmpID)
+		REFERENCES DimEmployee(EmpID)
+		
+		ALTER TABLE FactHRRecord
+		ADD CONSTRAINT FK_MaritalStatus
+		FOREIGN KEY (MaritalStatusID)
+		REFERENCES DimMaritalStatus(MaritalStatusID)
+		
+		ALTER TABLE FactHRRecord
+		ADD CONSTRAINT FK_Manager
+		FOREIGN KEY (ManagerID)
+		REFERENCES DimManager(ManagerID)
+		
+		ALTER TABLE FactHRRecord
+		ADD CONSTRAINT FK_EmpSatisfaction
+		FOREIGN KEY	(EmpSatisfactionID)
+		REFERENCES DimEmpSatisfaction(EmpSatisfactionID)
+		
+		ALTER TABLE FactHRRecord
+		ADD CONSTRAINT FK_Position
+		FOREIGN KEY (PositionID)
+		REFERENCES DimPosition(PositionID)
 
-ALTER TABLE DimEmploymentStatus
-ADD CONSTRAINT PK_EmploymentStatus
-PRIMARY KEY(EmpStatusID)
+-- DQL(Data Query Language)
+	-- 1. Create a stored procedure that will ask the user to input an employee ID, and if it is executed, it will display all information about the employee.
+		CREATE PROCEDURE EmployeeInformation @EmployeeID INT
+		AS
+		BEGIN
+		SELECT
+			fhr.EmpID,
+			de.EmployeeName,
+			dg.Sex,
+			de.DateOFBirth,
+			YEAR(GETDATE()) - YEAR(de.DateOFBirth) AS Age,
+			dms.MaritalDesc,
+			de.State,
+			de.Zip,
+			de.RaceDesc,
+			de.CitizenDesc,
+			dd.Department,
+			dp.Position,
+			dm.ManagerName,
+			de.DateofHire,
+			de.Salary,
+			de.LastPerformanceReview_Date,
+			de.RecruitmentSource,
+			des.EmploymentStatus,
+			de.TermReason,
+			de.DateofTermination,
+			de.Absences,
+			de.DaysLateLast30,
+			de.SpecialProjectsCount
+		FROM
+			FactHRRecord AS fhr
+		LEFT JOIN
+			DimEmployee AS de
+		ON
+			fhr.EmpID = de.EmpID
+		LEFT JOIN
+			DimDepartment as dd
+		ON
+			fhr.DeptID = dd.DeptID
+		LEFT JOIN
+			DimEmploymentStatus AS des
+		ON
+			fhr.EmpStatusID = des.EmpStatusID
+		LEFT JOIN
+			DimEmpSatisfaction AS desat
+		ON
+			fhr.EmpSatisfactionID = desat.EmpSatisfactionID
+		LEFT JOIN
+			DimGender AS dg
+		ON
+			fhr.GenderID =dg.GenderID
+		LEFT JOIN
+			DimManager AS dm
+		ON
+			fhr.ManagerID = dm.ManagerID
+		LEFT JOIN
+			DimMaritalStatus AS dms
+		ON
+			fhr.MaritalStatusID = dms.MaritalStatusID
+		LEFT JOIN
+			DimPerformanceScore AS dpf
+		ON 
+			fhr.PerfScoreID  = dpf.PerfScoreID
+		LEFT JOIN
+			DimPosition as dp
+		ON
+			fhr.PositionID = dp.PositionID
+		WHERE fhr.EmpID = @EmployeeID
+	END
+-- 2. Count the Total Employee
+	SELECT
+		COUNT(EmpID) AS TotalEmployee
+	FROM
+		DimEmployee
 
-ALTER TABLE DimDepartment
-ADD CONSTRAINT PK_Department
-PRIMARY KEY(DeptID)
-
-ALTER TABLE DimPerformanceScore
-ADD CONSTRAINT PK_PerformanceScore
-PRIMARY KEY(PerfScoreID)
-
-ALTER TABLE DimPosition
-ADD CONSTRAINT PK_Position
-PRIMARY KEY(PositionID)
-
-ALTER TABLE DimEmployee
-ADD CONSTRAINT PK_Employee
-PRIMARY KEY(EmpID)
-
-ALTER TABLE DimMaritalStatus
-ADD CONSTRAINT PK_MaritalStatus
-PRIMARY KEY(MaritalStatusID)
-
-ALTER TABLE DimManager
-ADD CONSTRAINT PK_Manager
-PRIMARY KEY(ManagerID)
-
-ALTER TABLE DimEmpSatisfaction
-ADD CONSTRAINT PK_EmpSatisfaction
-PRIMARY KEY(EmpSatisfactionID)
-
--------------------- Adding Foreign Key Constraint
-
-ALTER TABLE FactHRRecord
-ADD CONSTRAINT FK_Gender
-FOREIGN KEY(GenderID)
-REFERENCES DimGender(GenderID)
-
-ALTER TABLE FactHRRecord
-ADD CONSTRAINT FK_EmploymentStatus
-FOREIGN KEY(EmpStatusID)
-REFERENCES DimEmploymentStatus(EmpStatusID)
-
-ALTER TABLE FactHRRecord
-ADD CONSTRAINT FK_Department
-FOREIGN KEY(DeptID)
-REFERENCES DimDepartment(DeptID)
-
-ALTER TABLE FactHRRecord
-ADD CONSTRAINT FK_PerformanceScore
-FOREIGN KEY (PerfScoreID)
-REFERENCES DimPerformanceScore(PerfScoreID)
-
-ALTER TABLE FactHRRecord
-ADD CONSTRAINT FK_Employee
-FOREIGN KEY (EmpID)
-REFERENCES DimEmployee(EmpID)
-
-ALTER TABLE FactHRRecord
-ADD CONSTRAINT FK_MaritalStatus
-FOREIGN KEY (MaritalStatusID)
-REFERENCES DimMaritalStatus(MaritalStatusID)
-
-ALTER TABLE FactHRRecord
-ADD CONSTRAINT FK_Manager
-FOREIGN KEY (ManagerID)
-REFERENCES DimManager(ManagerID)
-
-ALTER TABLE FactHRRecord
-ADD CONSTRAINT FK_EmpSatisfaction
-FOREIGN KEY	(EmpSatisfactionID)
-REFERENCES DimEmpSatisfaction(EmpSatisfactionID)
-
-ALTER TABLE FactHRRecord
-ADD CONSTRAINT FK_Position
-FOREIGN KEY (PositionID)
-REFERENCES DimPosition(PositionID)
-
-
+-- 3 . Count the Total Active Employee
+	SELECT
+		COUNT(de.EmpID) AS 'Total Active Employee'
+	FROM
+		DimEmployee AS de
+	LEFT JOIN
+		FactHRRecord AS fhr
+	ON
+		de.EmpID = fhr.EmpID
+	LEFT JOIN
+		DimEmploymentStatus AS des
+	ON
+		FHR.EmpStatusID = des.EmpStatusID
+	WHERE 
+		des.EmploymentStatus = 'Active'
+	GROUP BY
+		EmploymentStatus
 
 ----------- To Transfer to PowerBi Site
 --- Get The data from SQL Server
