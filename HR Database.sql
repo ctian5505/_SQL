@@ -457,3 +457,51 @@ ALTER TABLE FactHRRecord
 ADD CONSTRAINT FK_Position
 FOREIGN KEY (PositionID)
 REFERENCES DimPosition(PositionID)
+
+
+
+----------- To Transfer to PowerBi Site
+--- Get The data from SQL Server
+--- Transform the Data / Data is cleaned because the source is clean
+
+-- Creatind Calendar TRable
+Calendar = 
+    CALENDAR(
+        MIN(DimEmployee[DateofHire]),
+        MAX(DimEmployee[DateofHire])
+    )
+// Creating Calendar based on Date  of Hire
+
+-- Year
+Year = 
+    YEAR(
+        'Calendar'[Date]
+    )
+// Creating Year Column
+--Quarter
+Quarter = 
+    QUARTER(
+        'Calendar'[Date]
+    )
+// Creating Quarter Column
+--Month
+Month = 
+    FORMAT(
+        'Calendar'[Date],
+        "mmm"
+    )
+// Creating Month Column
+--Day
+Day = 
+    DAY(
+        'Calendar'[Date]
+    )
+// Creating Day Column
+-- Month Number
+MonthNo = 
+    MONTH(
+        'Calendar'[Date]
+    )
+// Creating Month Number Column because this will be use to sort the month name column
+
+---- Creating Relationship
