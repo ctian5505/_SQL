@@ -1,10 +1,10 @@
 --- HR Project Plan
-  -- Data normalization
-  -- Data Cleaning
-  -- Adding Constraint
-
--- Querying
-	-- Procedure 
+  -- DML(Data Manipulation Language)
+  	-- Data Cleaning
+-- DDL(Data Definition Language)
+	-- Adding Constraint
+-- DQL(Data Query Language)
+	
 
 ---------------------------------------------------------------------------
 -- File Link: https://www.kaggle.com/datasets/rhuebner/human-resources-data-set       
