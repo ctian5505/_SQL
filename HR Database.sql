@@ -504,6 +504,13 @@ MonthNo =
     )
 // Creating Month Number Column because this will be use to sort the month name column
 
+
+--- Measures
+-- Age
+Age = 
+    YEAR(TODAY()) - 
+    YEAR(MAX(DimEmployee[DateOFBirth]))
+//Calculate tth age of the employee
 ---- Creating Relationship
 
 
@@ -535,7 +542,10 @@ BEGIN
 		de.RecruitmentSource,
 		des.EmploymentStatus,
 		de.TermReason,
-		de.DateofTermination
+		de.DateofTermination,
+		de.Absences,
+		de.DaysLateLast30,
+		de.SpecialProjectsCount
 	FROM
 		FactHRRecord AS fhr
 	LEFT JOIN
@@ -576,5 +586,6 @@ BEGIN
 		fhr.PositionID = dp.PositionID
 	WHERE fhr.EmpID = @EmployeeID
 	END
+
 
 EXEC EmployeeInformation 10001
