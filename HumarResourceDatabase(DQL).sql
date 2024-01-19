@@ -1,4 +1,11 @@
 -- DQL(Data Query Language)
+-----------------------------------------------------------------------------------------
+-- 1. Create a stored procedure that will ask the user to input an employee ID, and if it is executed, it will display all information about the employee.
+-- 2. Count the Total Employee
+-- 3 . Count the Total Active Employee
+-- 4 Rank the active employee Count base on department
+-- 5 Count the active employee of each Manager
+-----------------------------------------------------------------------------------------
 	-- 1. Create a stored procedure that will ask the user to input an employee ID, and if it is executed, it will display all information about the employee.
 		CREATE PROCEDURE EmployeeInformation @EmployeeID INT
 		AS
@@ -110,3 +117,25 @@
 		des.EmploymentStatus = 'Active'
 	GROUP BY
 		dd.Department
+
+-- 5 Count the active employee of each Manager
+
+SELECT
+	dm.ManagerName,
+	COUNT(EmpID) AS ActiveEmployeeCount
+FROM
+	FactHRRecord AS fhr
+LEFT JOIN
+	DimManager AS dm
+ON
+	fhr.ManagerID = dm.ManagerID
+LEFT JOIN 
+	DimEmploymentStatus AS des
+ON
+	fhr.EmpStatusID = des.EmpStatusID
+WHERE
+	des.EmploymentStatus = 'Active'
+GROUP BY
+	dm.ManagerName
+ORDER BY
+	ActiveEmployeeCount DESC
