@@ -139,3 +139,55 @@ GROUP BY
 	dm.ManagerName
 ORDER BY
 	ActiveEmployeeCount DESC
+
+-- 6 Rank the employee based on their salary.
+SELECT
+	RANK() OVER (ORDER BY Salary DESC) AS Rank,
+	EmployeeName, 
+	Salary
+FROM
+	DimEmployee
+
+-- 7 Display the average salary by department.
+SELECT
+	DISTINCT(Department),
+	AVG(Salary) AS [Average Salary]
+FROM
+	FactHRRecord AS fhr
+LEFT JOIN
+	DimDepartment AS dd
+ON
+	fhr.DeptID = dd.DeptID
+LEFT JOIN
+	DimEmployee AS  de
+ON
+	fhr.EmpID = de.EmpID
+GROUP BY
+	Department
+
+-- 8 Create a stored procedure that asks the user to input the department name to show all employees together with their position.
+
+CREATE PROCEDURE Department @department_name NVARCHAR(250)
+AS
+BEGIN
+SELECT
+	de.EmployeeName,
+	dd.Department,
+	dp.Position
+FROM
+	FactHRRecord AS fhr
+LEFT JOIN
+	DimEmployee AS de
+ON
+	fhr.EmpID = de.EmpID
+LEFT JOIN
+	DimDepartment AS dd
+ON
+	fhr.DeptID = dd.DeptID
+LEFT JOIN
+	DimPosition AS dp
+ON
+	fhr.PositionID = dp.PositionID
+WHERE Department = @department_name
+END
+	-- Sample Query : EXEC Department 'IT/IS'
