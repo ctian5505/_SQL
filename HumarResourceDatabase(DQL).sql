@@ -90,3 +90,23 @@
 		des.EmploymentStatus = 'Active'
 	GROUP BY
 		EmploymentStatus
+
+-- 4 Rank the active employee Count base on department
+	SELECT
+		dd.Department,
+		COUNT(fhr.EmpID) ActiveEmployeeCount,
+		RANK() OVER (ORDER BY COUNT(fhr.EmpID) DESC) AS [Rank]
+	FROM
+		FactHRRecord AS fhr
+	LEFT JOIN
+		DimDepartment AS dd
+	ON
+		fhr.DeptID = dd.DeptID
+	LEFT JOIN
+		DimEmploymentStatus AS des
+	ON
+		fhr.EmpStatusID = des.EmpStatusID
+	WHERE
+		des.EmploymentStatus = 'Active'
+	GROUP BY
+		dd.Department
