@@ -5,6 +5,9 @@
 -- 3 . Count the Total Active Employee
 -- 4 Rank the active employee Count base on department
 -- 5 Count the active employee of each Manager
+-- 6 Rank the employee based on their salary.
+-- 7 Display the average salary by department.
+-- 8 Create a stored procedure that asks the user to input the department name to show all employees together with their position.
 -----------------------------------------------------------------------------------------
 	-- 1. Create a stored procedure that will ask the user to input an employee ID, and if it is executed, it will display all information about the employee.
 		CREATE PROCEDURE EmployeeInformation @EmployeeID INT
