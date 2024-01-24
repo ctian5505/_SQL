@@ -194,3 +194,22 @@ ON
 WHERE Department = @department_name
 END
 	-- Sample Query : EXEC Department 'IT/IS'
+
+-- Find the difference between the previous year and the present employee hire count by year.
+WITH CTE as (
+
+SELECT
+	YEAR(DateofHire) AS Year,
+	COUNT(EmpID) AS TotalHiredEveryYear
+FROM
+	DimEmployee
+GROUP BY
+	YEAR(DateofHire)
+)
+SELECT
+	Year,
+	ISNULL(LAG(TotalHiredEveryYear) OVER (ORDER BY Year),0) AS PreviousYear,
+	TotalHiredEveryYear AS PresentYear,
+	TotalHiredEveryYear - ISNULL(LAG(TotalHiredEveryYear) OVER (ORDER BY Year),0) AS DiffChange
+FROM 
+	CTE
