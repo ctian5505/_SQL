@@ -1,6 +1,66 @@
+-----------Creating Table
+--Creating Sales Table
+CREATE TABLE Sales(
+TransactionID INT NOT NULL,
+OrderID NVARCHAR(50) NOT NULL,
+OrderDate DATE NOT NULL,
+ShipDate DATE NOT NULL,
+ShipModeID INT NOT NULL,
+CustomerID NVARCHAR(50) NOT NULL,
+SegmentID INT NOT NULL,
+ProdcuctID NVARCHAR(50) NOT NULL,
+Quantity INT NOT NULL
+)
 
 
+--Creating Customer Table
+CREATE TABLE Customer(
+CustomerID NVARCHAR(50) NOT NULL,
+CustomerName NVARCHAR(100) NOT NULL,
+City NVARCHAR(50) NOT NULL,
+State NVARCHAR(50) NOT NULL,
+Region NVARCHAR(50) NOT NULL,
+Country NVARCHAR(50) NOT NULL,
+PostalCode INT NOT NULL
+)
 
+--Creating ShipMode Table
+CREATE TABLE ShipMode (
+ShipModeID INT IDENTITY(1,1) NOT NULL,
+ShipMode NVARCHAR(50)
+)
+
+
+--Creating Segment Table
+CREATE TABLE Segment(
+SegmentID INT IDENTITY(1,1) NOT NULL,
+Segment NVARCHAR(50)
+)
+
+--Creating Product Table
+CREATE TABLE Product(
+ProductID NVARCHAR(50) NOT NULL,
+ProductName NVARCHAR(250) NOT NULL,
+SubCategoryID INT NOT NULL,
+Price MONEY
+)
+
+--Creating SubCategory Table
+CREATE TABLE SubCategory(
+SubCategoryID INT IDENTITY(1,1) NOT NULL,
+SubCategory NVARCHAR(100) NOT NULL,
+CategoryID INT NOT NULL
+)
+	
+	
+
+--Creating Category Table
+CREATE TABLE Category (
+CategoryID INT IDENTITY(1,1) NOT NULL,
+Category NVARCHAR(100) NOT NULL
+)
+
+-----------Creating Pipeline
 -- Category Pipeline
 INSERT INTO Category (Category)
 SELECT 
