@@ -62,6 +62,37 @@ CategoryID INT IDENTITY(1,1) NOT NULL,
 Category NVARCHAR(100) NOT NULL
 )
 
+---------- Adding Constraint
+--- Adding Primary Key Constrain on Customer..CustomerID
+ALTER TABLE Customer
+ADD CONSTRAINT PK_CustomerID
+PRIMARY KEY(CustomerID)
+
+--- Adding Primary Key Constrain on ShipMode..ShipModeID
+ALTER TABLE ShipMode
+ADD CONSTRAINT PK_ShipModeID
+PRIMARY KEY(ShipModeID)
+
+--- Adding Primary Key Constrain on Segment..SegmentID
+ALTER TABLE Segment
+ADD CONSTRAINT PK_SegmentID
+PRIMARY KEY(SegmentID)
+
+--- Adding Primary Key Constrain on Product..ProductID
+ALTER TABLE Product
+ADD CONSTRAINT PK_ProductID
+PRIMARY KEY(ProductID)
+
+--- Adding Primary Key Constrain on SubCategory..SubCategoryID
+ALTER TABLE SubCategory
+ADD CONSTRAINT PK_SubCategoryID
+PRIMARY KEY(SubCategoryID)
+
+--- Adding Primary Key Constrain on Category..CategoryID
+ALTER TABLE Category
+ADD CONSTRAINT PK_CategoryID
+PRIMARY KEY(CategoryID)
+
 -------------Creating Pipeline
 -- Category Pipeline
 INSERT INTO Category (Category)
