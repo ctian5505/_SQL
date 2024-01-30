@@ -277,7 +277,7 @@ WHERE
 -----------
 --Practice Pipeline
 
-ALTER PROCEDURE Test
+CREATE PROCEDURE Test
 AS
 BEGIN
 	--- Droping Temporary Table if Existed
