@@ -10,7 +10,7 @@ ShipDate DATE NOT NULL,
 ShipModeID INT NOT NULL,
 CustomerID NVARCHAR(50) NOT NULL,
 SegmentID INT NOT NULL,
-ProdcuctID NVARCHAR(50) NOT NULL,
+ProductID NVARCHAR(50) NOT NULL,
 Quantity INT NOT NULL
 )
 
@@ -93,6 +93,42 @@ ALTER TABLE Category
 ADD CONSTRAINT PK_CategoryID
 PRIMARY KEY(CategoryID)
 
+--- Adding Foreign Key Constrain on SubCategory..CategoryID
+ALTER TABLE SubCategory
+ADD CONSTRAINT FK_CategoryKey
+FOREIGN KEY(CategoryID)
+REFERENCES Category(CategoryID)
+
+--- Adding Foreign Key Constrain on Product..SubCategoryID
+ALTER TABLE Product
+ADD CONSTRAINT FK_SubCategoryID
+FOREIGN KEY (SubCategoryID)
+REFERENCES SubCategory(SubCategoryID)
+
+--- Adding Foreign Key Constrain on Sales..ProductID
+ALTER TABLE Sales
+ADD CONSTRAINT FK_ProductID
+FOREIGN KEY(ProductID) 
+REFERENCES Product(ProductID)	
+	
+--- Adding Foreign Key Constrain on Sales..SegmentID
+ALTER TABLE Sales
+ADD CONSTRAINT FK_SegmentID
+FOREIGN KEY(SegmentID)
+REFERENCES Segment(SegmentID)
+
+--- Adding Foreign Key Constrain on ShipMode..FK_ShipmodeID
+ALTER TABLE ShipMode
+ADD CONSTRAINT FK_ShipmodeID
+FOREIGN KEY(ShipModeID)
+REFERENCES ShipMode(ShipModeID)
+
+--- Adding Foreign Key Constrain on Sales..CustomerID
+ALTER TABLE Sales
+ADD CONSTRAINT FK_CustomerID
+FOREIGN KEY(CustomerID)
+REFERENCES Customer(CustomerID)
+	
 -------------Creating Pipeline
 -- Category Pipeline
 INSERT INTO Category (Category)
