@@ -118,7 +118,7 @@ FOREIGN KEY(SegmentID)
 REFERENCES Segment(SegmentID)
 
 --- Adding Foreign Key Constrain on ShipMode..FK_ShipmodeID
-ALTER TABLE ShipMode
+ALTER TABLE Sales
 ADD CONSTRAINT FK_ShipmodeID
 FOREIGN KEY(ShipModeID)
 REFERENCES ShipMode(ShipModeID)
@@ -275,9 +275,9 @@ WHERE
 --SELECT * FROM Sales
 
 -----------
-Practice Pipeline
+--Practice Pipeline
 
-CREATE PROCEDURE Test
+ALTER PROCEDURE Test
 AS
 BEGIN
 	--- Droping Temporary Table if Existed
@@ -443,7 +443,7 @@ BEGIN
 		c.CustomerID IS NULL
 
 	-- Creating Sales
-	INSERT INTO Sales(TransactionID,OrderID,OrderDate,ShipDate,ShipModeID,CustomerID, SegmentID, ProdcuctID,Quantity)
+	INSERT INTO Sales(TransactionID,OrderID,OrderDate,ShipDate,ShipModeID,CustomerID, SegmentID, ProductID,Quantity)
 	SELECT 
 		s.Transaction_ID,
 		s.Order_ID,
@@ -455,7 +455,7 @@ BEGIN
 		prod.ProductID,
 		s.Quantity
 	FROM 
-		Source AS s
+		#TempTable AS s
 	LEFT JOIN 
 		ShipMode AS sm
 	ON
