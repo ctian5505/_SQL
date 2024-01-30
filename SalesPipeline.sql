@@ -60,7 +60,7 @@ CategoryID INT IDENTITY(1,1) NOT NULL,
 Category NVARCHAR(100) NOT NULL
 )
 
------------Creating Pipeline
+-------------Creating Pipeline
 -- Category Pipeline
 INSERT INTO Category (Category)
 SELECT 
@@ -74,7 +74,9 @@ ON
 WHERE 
     c.Category IS NULL
 
- --Creating SubCatogery Pipeline
+--SELECT *  FROM Category
+
+-- --Creating SubCatogery Pipeline
 INSERT INTO SubCategory(Subcategory, CategoryID)
 SELECT 
     DISTINCT(s.Sub_Category), 
@@ -92,13 +94,15 @@ ON
 WHERE 
     sc.SubCategory IS NULL
 
--- Creating Product Pipeline
+--SELECT * FROM SubCategory
+
+---- Creating Product Pipeline
 INSERT INTO Product(ProductID, ProductName, SubCategoryID, Price)
 SELECT
 	DISTINCT(s.Product_ID),
 	s.Product_Name, 
 	sc.SubCategoryID,
-	(s.Sales/s.Quantity) AS Price 
+	s.Price 
 FROM 
 	Source as s
 LEFT JOIN
@@ -111,7 +115,8 @@ ON
 	s.Product_ID = p.ProductID
 WHERE p.ProductID IS NULL
 
--- Creating Segment
+--SELECT * FROM Product
+---- Creating Segment
 INSERT INTO Segment(Segment)
 SELECT 
 	DISTINCT(s.Segment)
@@ -124,7 +129,8 @@ ON
 WHERE
 	sg.Segment IS NULL
 
--- Creating ShipMode
+--SELECT * FROM Segment
+---- Creating ShipMode
 INSERT INTO ShipMode(ShipMode)
 SELECT 
 	DISTINCT(s.Ship_Mode)
@@ -137,7 +143,9 @@ ON
 WHERE 
 	sm.ShipMode IS NULL
 
- --Creating Customer
+--SELECT * FROM ShipMode
+
+-- --Creating Customer
 INSERT INTO Customer(CustomerID,CustomerName,City,State,Region,Country,PostalCode)
 SELECT 
 	DISTINCT(s.Customer_ID),
@@ -156,7 +164,9 @@ ON
 WHERE
 	c.CustomerID IS NULL
 
--- Creating Sales
+--SELECT * FROM Customer
+
+---- Creating Sales
 INSERT INTO Sales(TransactionID,OrderID,OrderDate,ShipDate,ShipModeID,CustomerID, SegmentID, ProdcuctID,Quantity)
 SELECT 
 	s.Transaction_ID,
@@ -192,3 +202,6 @@ ON
 	s.Transaction_ID = sales.TransactionID
 WHERE
 	sales.TransactionID IS NULL
+
+--SELECT * FROM Sales
+
