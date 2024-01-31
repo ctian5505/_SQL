@@ -147,7 +147,7 @@ ADD CONSTRAINT FK_CustomerID
 FOREIGN KEY(CustomerID)
 REFERENCES Customer(CustomerID)
 	
---Stored Procedure (Practice Pipeline)
+--Stored Procedure (ETL)
 CREATE PROCEDURE Test
 AS
 BEGIN
@@ -200,7 +200,7 @@ BEGIN
 		Quantity)
 	SELECT * FROM Superstore
 
-	-- Inserting into Category (Pipeline)
+	-- Inserting into Category
 	INSERT INTO Category (
 		Category
 		)
@@ -215,7 +215,7 @@ BEGIN
 	WHERE 
 		c.Category IS NULL
 
-	--Inserting into SubCatogery (Pipeline)
+	-- Inserting into SubCatogery
 	INSERT INTO SubCategory(
 		Subcategory, 
 		CategoryID
@@ -236,7 +236,7 @@ BEGIN
 	WHERE 
 		sc.SubCategory IS NULL
 
-	--Inserting into Product (Pipeline)
+	-- Inserting into Product
 	INSERT INTO Product(
 		ProductID, 
 		ProductName, 
@@ -260,7 +260,7 @@ BEGIN
 		s.Product_ID = p.ProductID
 	WHERE p.ProductID IS NULL
 
-	-- Creating Segment
+	-- Inserting into Segment
 	INSERT INTO Segment(
 		Segment
 		)
@@ -275,7 +275,7 @@ BEGIN
 	WHERE
 		sg.Segment IS NULL
 
-	-- Creating ShipMode
+	-- Inserting into ShipMode
 	INSERT INTO ShipMode(ShipMode)
 	SELECT 
 		DISTINCT(s.Ship_Mode)
@@ -288,7 +288,7 @@ BEGIN
 	WHERE 
 		sm.ShipMode IS NULL
 
-	--Creating Customer
+	--Inserting into Customer
 	INSERT INTO Customer(
 		CustomerID,
 		CustomerName,
@@ -313,7 +313,7 @@ BEGIN
 	WHERE
 		c.CustomerID IS NULL
 
-	-- Creating Sales
+	-- Inserting into Sales
 	INSERT INTO Sales(TransactionID,OrderID,OrderDate,ShipDate,ShipModeID,CustomerID, SegmentID, ProductID,Quantity)
 	SELECT 
 		s.Transaction_ID,
